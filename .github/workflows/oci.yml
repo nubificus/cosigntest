@@ -83,8 +83,6 @@ jobs:
         COSIGN_EXPERIMENTAL: "true"
         DIGEST: ${{ steps.build-and-push.outputs.digest }}
         TAGS: ${{ steps.docker_meta.outputs.tags }}
-      # This step uses the identity token to provision an ephemeral certificate
-      # against the sigstore community Fulcio instance.
       # run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
       run: |
         cosign sign --yes harbor.nbfc.io/nbfc/cosigntest@${{steps.build-and-push.outputs.digest}} \
