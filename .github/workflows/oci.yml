@@ -67,7 +67,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: nbfc/cosigntest:${{env.ARTIFACT_SHA}}
+        tags: harbor.nbfc.io/nbfc/cosigntest:${{env.ARTIFACT_SHA}}
     - name: Sign the published Docker image
       env:
         COSIGN_EXPERIMENTAL: "true"
