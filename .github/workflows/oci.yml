@@ -14,11 +14,12 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    runs-on: [ self-hosted, "${{ matrix.archconfig }}", go]
-    strategy:
-      matrix:
-        archconfig: [ x86_64, aarch64 ]
-      fail-fast: false
+    runs-on: ubuntu-latest
+    # runs-on: [ self-hosted, "${{ matrix.archconfig }}", go]
+    # strategy:
+    #   matrix:
+    #     archconfig: [ x86_64, aarch64 ]
+    #   fail-fast: false
     
     steps:
     - name: Cleanup previous jobs
@@ -32,9 +33,9 @@ jobs:
       with:
         fetch-depth: 1
     
-    - name: Display Go version
-      run: |
-        go version
+    # - name: Display Go version
+    #   run: |
+    #     go version
 
     - name: Find SHA
       run: |
