@@ -67,8 +67,9 @@ jobs:
       id: docker_meta
       uses: docker/metadata-action@v4.4.0
       with:
-        images: ghcr.io/sigstore/sample-honk
+        images: harbor.nbfc.io/nubificus/cosigntest
         tags: type=sha,format=long
+
     - name: Build and push
       id: build-and-push
       uses: docker/build-push-action@master
@@ -77,9 +78,8 @@ jobs:
         file: ./Dockerfile
         push: true
         #tags: harbor.nbfc.io/nubificus/cosigntest:${{env.ARTIFACT_SHA}}
-        images: harbor.nbfc.io/nubificus/cosigntest
-        tags: |
-          type=sha
+        #images: harbor.nbfc.io/nubificus/cosigntest
+        tags: ${{ steps.docker_meta.outputs.tags }}
 
     - name: Sign the published Docker image
       env:
