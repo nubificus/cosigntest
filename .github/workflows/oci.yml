@@ -91,10 +91,10 @@ jobs:
       run: |
         cosign sign --yes harbor.nbfc.io/nubificus/cosigntest@${{steps.build-and-push.outputs.digest}} 
         #\
-        #-a "repo=${{github.repository}}" \
-        #-a "workflow=${{github.workflow}}" \
-        #-a "ref=${{github.sha}}" \
-        #-a "author=${{github.repository_owner}}"
+        -a "repo=${{github.repository}}" \
+        -a "workflow=${{github.workflow}}" \
+        -a "ref=${{github.sha}}" \
+        -a "author=Nubificus LTD"
     - name: Clean up Docker Context for Buildx
       id: buildx-context-cleanup
       run: |
