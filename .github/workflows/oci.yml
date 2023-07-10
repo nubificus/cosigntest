@@ -11,6 +11,9 @@ on:
 
 jobs:
   build:
+    permissions:
+      contents: read
+      id-token: write
     runs-on: [ self-hosted, "${{ matrix.archconfig }}", go]
     strategy:
       matrix:
@@ -75,7 +78,8 @@ jobs:
       # against the sigstore community Fulcio instance.
       # run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
       run: |
-        cosign sign harbor.nbfc.io/nbfc/cosigntest$${{steps.build-and-push.outputs.digest}}
+        cosign sign --yes harbor.nbfc.io/nbfc/cosigntest$${{steps.build-and-push.outputs.digest}} \
+        -a "author=${{github.repository_owner}}"
     - name: Clean up Docker Context for Buildx
       id: buildx-context-cleanup
       run: |
