@@ -89,8 +89,7 @@ jobs:
         TAGS: ${{ steps.docker_meta.outputs.tags }}
       # run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
       run: |
-        cosign sign --yes harbor.nbfc.io/nubificus/cosigntest@${{steps.build-and-push.outputs.digest}} 
-        #\
+        cosign sign --yes harbor.nbfc.io/nubificus/cosigntest@${{steps.build-and-push.outputs.digest}} \
         -a "repo=${{github.repository}}" \
         -a "workflow=${{github.workflow}}" \
         -a "ref=${{github.sha}}" \
