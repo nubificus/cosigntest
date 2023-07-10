@@ -78,8 +78,8 @@ jobs:
         push: true
         #tags: harbor.nbfc.io/nubificus/cosigntest:${{env.ARTIFACT_SHA}}
         images: harbor.nbfc.io/nubificus/cosigntest
-        tags: |
-          type=sha
+        #tags: |
+        #  type=sha
 
     - name: Sign the published Docker image
       env:
