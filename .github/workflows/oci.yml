@@ -68,7 +68,8 @@ jobs:
       uses: docker/metadata-action@v4.4.0
       with:
         images: harbor.nbfc.io/nubificus/cosigntest
-        tags: type=sha,format=long
+        tags: |
+                type=sha,prefix=nbfc-
 
     - name: Build and push
       id: build-and-push
@@ -88,11 +89,12 @@ jobs:
         TAGS: ${{ steps.docker_meta.outputs.tags }}
       # run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
       run: |
-        cosign sign --yes harbor.nbfc.io/nubificus/cosigntest@${{steps.build-and-push.outputs.digest}} \
-        -a "repo=${{github.repository}}" \
-        -a "workflow=${{github.workflow}}" \
-        -a "ref=${{github.sha}}" \
-        -a "author=${{github.repository_owner}}"
+        cosign sign --yes harbor.nbfc.io/nubificus/cosigntest@${{steps.build-and-push.outputs.digest}} 
+        #\
+        #-a "repo=${{github.repository}}" \
+        #-a "workflow=${{github.workflow}}" \
+        #-a "ref=${{github.sha}}" \
+        #-a "author=${{github.repository_owner}}"
     - name: Clean up Docker Context for Buildx
       id: buildx-context-cleanup
       run: |
