@@ -14,12 +14,11 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    runs-on: ubuntu-latest
-    # runs-on: [ self-hosted, "${{ matrix.archconfig }}", go]
-    # strategy:
-    #   matrix:
-    #     archconfig: [ x86_64, aarch64 ]
-    #   fail-fast: false
+    runs-on: [ self-hosted, "${{ matrix.archconfig }}", go]
+    strategy:
+      matrix:
+        archconfig: [ x86_64, aarch64 ]
+      fail-fast: false
     
     steps:
     - name: Cleanup previous jobs
