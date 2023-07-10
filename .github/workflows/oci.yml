@@ -71,15 +71,15 @@ jobs:
         tags: type=sha,format=long
     - name: Build and push
       id: build-and-push
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@master
       with:
         context: .
         file: ./Dockerfile
         push: true
         #tags: harbor.nbfc.io/nubificus/cosigntest:${{env.ARTIFACT_SHA}}
         images: harbor.nbfc.io/nubificus/cosigntest
-        #tags: |
-        #  type=sha
+        tags: |
+          type=sha
 
     - name: Sign the published Docker image
       env:
