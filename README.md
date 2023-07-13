@@ -37,3 +37,12 @@ cosign verify harbor.nbfc.io/nubificus/cosigntest:nbfc-0966adc \
   --certificate-oidc-issuer "https://token.actions.githubusercontent.com" /
   -a 'author=Nubificus LTD'
 ```
+
+For verification using wildcards:
+
+```bash
+cosign verify harbor.nbfc.io/nubificus/cosigntest:nbfc-0966adc \
+  --certificate-identity-regexp="^https:\/\/github\.com\/nubificus\/" \
+  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+  -a 'author=Nubificus LTD'
+```
