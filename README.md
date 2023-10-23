@@ -46,3 +46,42 @@ cosign verify harbor.nbfc.io/nubificus/cosigntest:nbfc-0966adc \
   --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
   -a 'author=Nubificus LTD'
 ```
+
+For verification in Kubernetes clusters we could use a [policy controller](https://github.com/sigstore/helm-charts/tree/main/charts/policy-controller#deploy-policy-controller-helm-chart).
+
+Then we can create a new policy:
+
+```yaml
+apiVersion: v1                                                                                                                                                                                             
+kind: Namespace                                                                                                                                                                             
+metadata:                                                                                                                                               
+  labels:                                                                                                                                                                                            
+    policy.sigstore.dev/include: "true"                                                                                                                                                                      
+    kubernetes.io/metadata.name: test-policy                                                                                                                                                       
+  name: test-policy                                                                                                                                                                                          
+spec:                                                                                                                                                                                                       
+  finalizers:                                                                                                                                                                                               
+  - kubernetes
+```
+
+And add your cluster image policy:
+
+```yaml
+apiVersion: policy.sigstore.dev/v1beta1                                                                                                                                                                    
+kind: ClusterImagePolicy                                                                                                                                                                                    
+metadata:                                                                                                                                                                                                  
+  name: nbfc-policy                                                                                                                                                                                        
+spec:                                                                                                                                                                                                      
+  authorities:                                                                                                                                                                                             
+  - keyless:                                                                                                                                                                                              
+      identities:                                                                                                                                                                                          
+      - issuer: https://token.actions.githubusercontent.com                                                                                                                                            
+        subjectRegExp: https://github.com/nubificus/.*/.github/workflows/*@*                                                                                                                              
+      url: https://fulcio.sigstore.dev                                                                                                                                                                     
+    name: authority-0                                                                                                                                                                                   
+  images:                                                                                                                                                                                              
+  - glob: '**'                                                                                                                                                                                         
+  mode: enforce
+```
+{"apiVersion":"policy.sigstore.dev/v1beta1","kind":"ClusterImagePolicy","metadata":{"annotations":{},"name":"nbfc-policy"},"spec":{"authorities":[{"keyless":{"identities":[{"issuer":"https://token.│·····
+actions.githubusercontent.com","subjectRegExp":"https://github.com/nubificus/.*/.github/workflows/*@*"}]}}],"images":[{"glob":"**"}]}}
