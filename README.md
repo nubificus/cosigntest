@@ -80,7 +80,8 @@ spec:
       url: https://fulcio.sigstore.dev                                                                                                                                                                     
     name: authority-0                                                                                                                                                                                   
   images:                                                                                                                                                                                              
-  - glob: '**'                                                                                                                                                                                         
+  - glob: '**'
+```                                                                                                                                                                                   
   mode: enforce
 ```
 {"apiVersion":"policy.sigstore.dev/v1beta1","kind":"ClusterImagePolicy","metadata":{"annotations":{},"name":"nbfc-policy"},"spec":{"authorities":[{"keyless":{"identities":[{"issuer":"https://token.│·····
